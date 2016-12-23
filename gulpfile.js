@@ -12,6 +12,9 @@ var b = watchify(browserify({
   entries: ['./src/index.js']
 }))
 
+b.on('update', bundle)
+b.on('log', gutil.log)
+
 function bundle () {
   return b.bundle()
     .on('error', gutil.log.bind(gutil, 'Build error'))
