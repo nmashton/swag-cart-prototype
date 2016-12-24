@@ -26,10 +26,27 @@ export function cartItems (state = DEFAULTS.cartItems, action) {
           Object.assign({}, action.item, {id: v4(), quantity:1})
         ]
       }
-    case C.REMOVE_ITEM:
+    case C.DECREMENT:
       {
-        return state.filter((item) => item.id !== action.id)
+        let results = state.map((item) => {
+          if (item.id === action.id) {
+            if (item.quantity === 1) {
+              return {delete: true}
+            } else {
+              return Object.assign({}, item, {quantity: item.quantity - 1})
+            }
+          }
+        })
+        return results.filter((item) => !item.delete)
       }
+    case C.INCREMENT:
+      return state.map((item) => (
+        item.id === action.id
+        ? Object.assign({}, item, {quantity: item.quantity + 1})
+        : item
+      ))
+    case C.REMOVE_ITEM:
+      return state.filter((item) => item.id !== action.id)
     default:
       return state
   }

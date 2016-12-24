@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { addItem, remove } from './actions'
+import { addItem, incdec, remove } from './actions'
 
 
 /***
@@ -45,19 +45,22 @@ const Cart_ = ({ cartItems = [], totalPrice = 0 }) => (
   </div>
 )
 
-const CartItem_ = ({ id, price, quantity, remove, text }) => (
+const CartItem_ = ({ id, incdec, price, quantity, remove, text }) => (
   <div key={ id }>
     <p>{ text }</p>
     <p>Quantity: { quantity }</p>
     <p>Price: { price }</p>
     <button onClick={remove}>Remove</button>
+    <button onClick={incdec(true)}>Add</button>
+    <button onClick={incdec(false)}>Subtract</button>
   </div>
 )
 
 const CartItem = connect(
   (store) => ({}),
   (dispatch, ownProps) => ({
-    remove: () => dispatch(remove(ownProps.id))
+    remove: () => dispatch(remove(ownProps.id)),
+    incdec: (inc = true) => () => dispatch(incdec(ownProps.id, inc))
   })
 )(CartItem_)
 
