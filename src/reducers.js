@@ -7,6 +7,7 @@ const DEFAULTS = {
 }
 
 export function cartItems (state = DEFAULTS.cartItems, action) {
+  console.log(action)
   switch (action.type) {
     case C.ADD_ITEM:
       {
@@ -18,6 +19,10 @@ export function cartItems (state = DEFAULTS.cartItems, action) {
             type, text, price
           }
         ]
+      }
+    case C.REMOVE_ITEM:
+      {
+        return state.filter((item) => item.id !== action.id)
       }
     default:
       return state

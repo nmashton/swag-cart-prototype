@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { addItem } from './actions'
+import { addItem, remove } from './actions'
 
 
 /***
@@ -12,17 +12,18 @@ const Purchaseable_ = ({ add, children, price, text, type }) => (
   <div>
     <h2>{ children }</h2>
     <p>
-      <button onClick={ () => {
-        add({ type, text, price })
-      } }>Add to cart</button>
+      <button onClick={add}>Add to cart</button>
     </p>
   </div>
 )
 
 export const Purchaseable = connect(
   (state) => ({}),
-  (dispatch) => ({
-    add: (item) => dispatch(addItem(item))
+  (dispatch, ownProps) => ({
+    add: (item) => {
+      let { price, text, type } = ownProps
+      dispatch(addItem({ price, text, type }))
+    }
   })
 )(Purchaseable_)
 
@@ -33,17 +34,25 @@ export const Purchaseable = connect(
 
 const Cart_ = ({ cartItems = [] }) => (
   <div>
-    { cartItems.map(CartItem) }
+    { cartItems.map(({id, text}) => <CartItem id={id} key={id} text={text}/>) }
   </div>
 )
 
-const CartItem = ({ text, id }) => (
+const CartItem_ = ({ id, text, remove }) => (
   <div key={ id }>
     { text }
+    <button onClick={remove}>Remove</button>
   </div>
 )
+
+const CartItem = connect(
+  (store) => ({}),
+  (dispatch, ownProps) => ({
+    remove: () => dispatch(remove(ownProps.id))
+  })
+)(CartItem_)
 
 export const Cart = connect(
   ({cartItems}) => ({cartItems}),
-  (dispatch) => ({})
+  (dispatch, ownProps) => ({})
 )(Cart_)
