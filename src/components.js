@@ -64,7 +64,7 @@ const CartItem = connect(
 export const Cart = connect(
   ({cartItems}) => ({
     cartItems,
-    totalPrice: () => cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+    totalPrice: () => cartItems.reduce((acc, item) => (acc + item.price * item.quantity).toFixed(2), 0)
   }),
   (dispatch, ownProps) => ({})
 )(Cart_)
