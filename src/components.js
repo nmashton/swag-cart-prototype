@@ -32,16 +32,24 @@ export const Purchaseable = connect(
  * Shopping cart components
  */
 
-const Cart_ = ({ cartItems = [] }) => (
+const Cart_ = ({ cartItems = [], totalPrice = 0 }) => (
   <div>
-    { cartItems.map((item) => <CartItem key={item.id} {...item}/>) }
+    <div>
+      { cartItems.map((item) => <CartItem key={item.id} {...item}/>) }
+    </div>
+    <div>
+      <h2>
+        Total: { totalPrice() }
+      </h2>
+    </div>
   </div>
 )
 
-const CartItem_ = ({ id, quantity, remove, text }) => (
+const CartItem_ = ({ id, price, quantity, remove, text }) => (
   <div key={ id }>
     <p>{ text }</p>
     <p>Quantity: { quantity }</p>
+    <p>Price: { price }</p>
     <button onClick={remove}>Remove</button>
   </div>
 )
@@ -54,6 +62,9 @@ const CartItem = connect(
 )(CartItem_)
 
 export const Cart = connect(
-  ({cartItems}) => ({cartItems}),
+  ({cartItems}) => ({
+    cartItems,
+    totalPrice: () => cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  }),
   (dispatch, ownProps) => ({})
 )(Cart_)
