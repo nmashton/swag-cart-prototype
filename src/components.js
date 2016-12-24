@@ -1,31 +1,24 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 
-const Cart = ({ items = [] }) => (
+/***
+ * Shopping cart components
+ */
+
+const Cart_ = ({ cartItems = [] }) => (
   <div>
-    { items.map(CartItem) }
+    { cartItems.map(CartItem) }
   </div>
 )
 
 const CartItem = ({ text }) => (
-  <div>
+  <div key={ text }>
     { text }
   </div>
 )
 
-export class SwagContainer extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      itemsInCart: [{'text': 'testing'}]
-    }
-  }
-
-  render () {
-    return (
-      <div>
-        <Cart items={ this.state.itemsInCart }/>
-      </div>
-    )
-  }
-}
+export const Cart = connect(
+  ({cartItems}) => ({cartItems}),
+  (dispatch) => ({})
+)(Cart_)
