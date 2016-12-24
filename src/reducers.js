@@ -1,9 +1,25 @@
+import { v4 } from 'uuid'
+
+import * as C from './constants'
+
 const DEFAULTS = {
-  cartItems: [
-    {text: 'testing'}
-  ]
+  cartItems: []
 }
 
 export function cartItems (state = DEFAULTS.cartItems, action) {
-  return state
+  switch (action.type) {
+    case C.ADD_ITEM:
+      {
+        let { type, text, price } = action.item
+        return [
+          ...state,
+          {
+            id: v4(),
+            type, text, price
+          }
+        ]
+      }
+    default:
+      return state
+  }
 }

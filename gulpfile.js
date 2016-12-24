@@ -4,7 +4,6 @@ var gulp = require('gulp')
 var gutil = require('gulp-util')
 var source = require('vinyl-source-stream')
 var sourcemaps = require('gulp-sourcemaps')
-var streamify = require('gulp-streamify')
 var uglify = require('gulp-uglify')
 var watchify = require('watchify')
 
@@ -20,7 +19,9 @@ function bundle () {
     .on('error', gutil.log.bind(gutil, 'Build error'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(streamify(uglify()))
+    .pipe(uglify({
+      compress: {dead_code: true}
+    }))
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./dist/'))

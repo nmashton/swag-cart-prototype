@@ -3,10 +3,12 @@ import { render } from 'react-dom'
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
-import { Cart } from './components'
+import { Cart, Shirt } from './components'
 import { cartItems } from './reducers'
 
 const store = createStore(combineReducers({ cartItems }))
+
+window.store = store
 
 render(
   (
@@ -14,5 +16,14 @@ render(
       <Cart/>
     </Provider>
   ),
-  document.getElementById('app')
+  document.getElementById('cart')
+)
+
+render(
+  (
+    <Provider store={ store }>
+      <Shirt/>
+    </Provider>
+  ),
+  document.getElementById('buy_me')
 )
