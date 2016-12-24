@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
-import { Cart, Shirt } from './components'
+import { Cart, Purchaseable } from './components'
 import { cartItems } from './reducers'
 
 const store = createStore(combineReducers({ cartItems }))
@@ -22,7 +22,9 @@ render(
 render(
   (
     <Provider store={ store }>
-      <Shirt/>
+      <Purchaseable price={20.99} text="T-Shirt" type="t_shirt">
+        T-Shirt
+      </Purchaseable>
     </Provider>
   ),
   document.getElementById('buy_me')

@@ -3,29 +3,29 @@ import { connect } from 'react-redux'
 
 import { addItem } from './actions'
 
+
 /***
- * Item purchase example component
+ * Item selector component
  */
 
-const Shirt_ = ({ add }) => (
+const Purchaseable_ = ({ add, children, price, text, type }) => (
   <div>
-    Buy this t-shirt
-    <button onClick={ () => {
-      add({
-        type: 't-shirt',
-        text: 'T-Shirt',
-        price: 20.99
-      })
-    } }>Buy me</button>
+    <h2>{ children }</h2>
+    <p>
+      <button onClick={ () => {
+        add({ type, text, price })
+      } }>Add to cart</button>
+    </p>
   </div>
 )
 
-export const Shirt = connect(
+export const Purchaseable = connect(
   (state) => ({}),
   (dispatch) => ({
     add: (item) => dispatch(addItem(item))
   })
-)(Shirt_)
+)(Purchaseable_)
+
 
 /***
  * Shopping cart components
