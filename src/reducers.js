@@ -11,13 +11,19 @@ export function cartItems (state = DEFAULTS.cartItems, action) {
   switch (action.type) {
     case C.ADD_ITEM:
       {
-        let { type, text, price } = action.item
+        let matches = state.filter((item) => item.type === action.item.type)
+        if (matches.length) {
+          return [...state].map((item) => {
+            if (item.type === action.item.type) {
+              return Object.assign({}, item, {quantity: item.quantity + 1})
+            } else {
+              return item
+            }
+          })
+        }
         return [
           ...state,
-          {
-            id: v4(),
-            type, text, price
-          }
+          Object.assign({}, action.item, {id: v4(), quantity:1})
         ]
       }
     case C.REMOVE_ITEM:

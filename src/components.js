@@ -34,13 +34,14 @@ export const Purchaseable = connect(
 
 const Cart_ = ({ cartItems = [] }) => (
   <div>
-    { cartItems.map(({id, text}) => <CartItem id={id} key={id} text={text}/>) }
+    { cartItems.map((item) => <CartItem key={item.id} {...item}/>) }
   </div>
 )
 
-const CartItem_ = ({ id, text, remove }) => (
+const CartItem_ = ({ id, quantity, remove, text }) => (
   <div key={ id }>
-    { text }
+    <p>{ text }</p>
+    <p>Quantity: { quantity }</p>
     <button onClick={remove}>Remove</button>
   </div>
 )
