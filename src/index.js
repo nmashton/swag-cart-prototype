@@ -1,9 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+import { SwagContainer } from './components'
+
 render(
   (
-    <div>Hello, world!</div>
+    <SwagContainer/>
   ),
   document.getElementById('app')
 )
