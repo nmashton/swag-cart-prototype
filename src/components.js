@@ -8,7 +8,7 @@ import { addItem, incdec, remove } from './actions'
  * Item selector component
  */
 
-const Purchaseable_ = ({ add, children, img, price, text, type }) => (
+const Purchaseable_ = ({ add, children, img, text }) => (
   <div className="card">
     <div className="card-image">
       <img src={img}/>
