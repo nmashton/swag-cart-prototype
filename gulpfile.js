@@ -7,9 +7,14 @@ var sourcemaps = require('gulp-sourcemaps')
 var uglify = require('gulp-uglify')
 var watchify = require('watchify')
 
-var b = watchify(browserify({
-  entries: ['./src/index.js']
-}))
+var opts = Object.assign({}, watchify.args, {debug: true})
+
+var b = watchify(
+  browserify(
+    'src/index.js',
+    opts
+  )
+)
 
 b.on('update', bundle)
 b.on('log', gutil.log)
@@ -19,12 +24,12 @@ function bundle () {
     .on('error', gutil.log.bind(gutil, 'Build error'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(uglify({
       compress: {dead_code: true}
     }))
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dist/'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('dist'))
 }
 
 gulp.task('default', bundle)
