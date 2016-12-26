@@ -7,7 +7,6 @@ const DEFAULTS = {
 }
 
 export function cartItems (state = DEFAULTS.cartItems, action) {
-  console.log(action)
   switch (action.type) {
     case C.ADD_ITEM:
       {
@@ -23,7 +22,7 @@ export function cartItems (state = DEFAULTS.cartItems, action) {
         }
         return [
           ...state,
-          Object.assign({}, action.item, {id: v4(), quantity:1})
+          Object.assign({}, action.item, {id: v4(), quantity: 1})
         ]
       }
     case C.DECREMENT:

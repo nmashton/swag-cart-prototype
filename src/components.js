@@ -8,19 +8,29 @@ import { addItem, incdec, remove } from './actions'
  * Item selector component
  */
 
-const Purchaseable_ = ({ add, children, price, text, type }) => (
-  <div>
-    <h2>{ children }</h2>
-    <p>
-      <button onClick={add}>Add to cart</button>
-    </p>
+const Purchaseable_ = ({ add, children, img, price, text, type }) => (
+  <div className="card">
+    <div className="card-image">
+      <img src={img}/>
+      <span className="card-title">
+        { text }
+      </span>
+    </div>
+    <div className="card-content">
+      <p>
+        { children }
+      </p>
+    </div>
+    <div className="card-action">
+      <a onClick={add}>Add to cart</a>
+    </div>
   </div>
 )
 
 export const Purchaseable = connect(
   (state) => ({}),
   (dispatch, ownProps) => ({
-    add: (item) => {
+    add: () => {
       let { price, text, type } = ownProps
       dispatch(addItem({ price, text, type }))
     }
@@ -33,27 +43,47 @@ export const Purchaseable = connect(
  */
 
 const Cart_ = ({ cartItems = [], totalPrice = 0 }) => (
-  <div>
-    <div>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
       { cartItems.map((item) => <CartItem key={item.id} {...item}/>) }
-    </div>
-    <div>
-      <h2>
-        Total: { totalPrice() }
-      </h2>
-    </div>
-  </div>
+      <tr>
+        <td>Total:</td>
+        <td>{ totalPrice() }</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 )
 
 const CartItem_ = ({ id, incdec, price, quantity, remove, text }) => (
-  <div key={ id }>
-    <p>{ text }</p>
-    <p>Quantity: { quantity }</p>
-    <p>Price: { price }</p>
-    <button onClick={remove}>Remove</button>
-    <button onClick={incdec(true)}>Add</button>
-    <button onClick={incdec(false)}>Subtract</button>
-  </div>
+  <tr key={ id }>
+    <td>{ text }</td>
+    <td>{ price }</td>
+    <td>{ quantity }</td>
+    <td>
+      <a className="btn-floating btn-small waves-effect waves-light grey"
+         onClick={incdec(false)}>
+        <i className="material-icons">remove</i>
+      </a>
+      <a className="btn-floating btn-small waves-effect waves-light grey"
+         onClick={incdec(true)}>
+        <i className="material-icons">add</i>
+      </a>
+      <a className="btn-floating btn-small waves-effect waves-light red"
+         onClick={remove}>
+        <i className="material-icons">delete</i>
+      </a>
+    </td>
+  </tr>
 )
 
 const CartItem = connect(
@@ -67,7 +97,7 @@ const CartItem = connect(
 export const Cart = connect(
   ({cartItems}) => ({
     cartItems,
-    totalPrice: () => cartItems.reduce((acc, item) => (acc + item.price * item.quantity).toFixed(2), 0)
+    totalPrice: () => cartItems.reduce((acc, item) => (acc + item.price * item.quantity), 0).toFixed(2)
   }),
   (dispatch, ownProps) => ({})
 )(Cart_)

@@ -3,11 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title>Swag Shop Test</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      td { width: 25%; }
+    </style>
   </head>
   <body>
-    <div id="buy_me"></div>
-
-    <div id="cart"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col s6">
+          <div id="buy_me"></div>
+        </div>
+        <div class="col s6">
+          <div id="buy_me_also"></div>
+        </div>
+      </div>
+      <div id="cart"></div>
+    </div>
 
     <script src="./dist/bundle.js"></script>
   </body>
