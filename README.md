@@ -15,6 +15,8 @@ This demo is written in a form that assumes compilation using [Gulp](http://gulp
 [Babel](https://babeljs.io/), and (to run both of those) [Node](https://nodejs.org/en/).
 
 Clone the repo. Ensure you have a working installation of both Node and Gulp.
+Run `npm install` to install dependencies.
+
 To compile the JS, run `gulp` in the root directory. (This will start an auto
 recompilation process, but once it successfully compiles for the first time,
 you can interrupt the process with `ctrl+c`.) Then run `Python -m SimpleHTTPServer`
